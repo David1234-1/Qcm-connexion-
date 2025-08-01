@@ -2,12 +2,12 @@
 window.StudyHubConfig = {
   // Configuration Firebase (à remplacer par vos propres clés)
   firebase: {
-    apiKey: "AIzaSyCqGSBrsJ-7PIpfjAM58gD8h4VcY793rWQ",
-    authDomain: "studyhub-proje.firebaseapp.com",
-    projectId: "studyhub-proje",
-    storageBucket: "studyhub-proje.firebasestorage.app",
-    messagingSenderId: "359347355393",
-    appId: "1:359347355393:web:8c05ede417c10c272d6500"
+    apiKey: "AIzaSyBvX9X9X9X9X9X9X9X9X9X9X9X9X9X9X9X",
+    authDomain: "studyhub-app.firebaseapp.com",
+    projectId: "studyhub-app",
+    storageBucket: "studyhub-app.appspot.com",
+    messagingSenderId: "123456789012",
+    appId: "1:123456789012:web:abcdefghijklmnop"
   },
   
   // Configuration IA
@@ -69,8 +69,8 @@ firebase: {
   authDomain: "votre-projet.firebaseapp.com",
   projectId: "votre-projet",
   storageBucket: "votre-projet.appspot.com",
-  messagingSenderId: "359347355393",
-  appId: "1:359347355393:web:8c05ede417c10c272d6500"
+  messagingSenderId: "123456789012",
+  appId: "1:123456789012:web:abcdefghijklmnop"
 }
 */
 

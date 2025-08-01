@@ -2,31 +2,369 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Auth Firebase StudyHub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyHub - Connexion</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: Arial, sans-serif; max-width: 400px; margin: 40px auto; }
-    input, button { margin: 6px 0; width: 100%; padding: 8px; }
-    #user-div { margin-top: 20px; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .login-container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      width: 100%;
+      max-width: 450px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+    }
+
+    .logo-section {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .logo-section h1 {
+      color: #333;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .logo-section p {
+      color: #666;
+      font-size: 1.1rem;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #e1e5e9;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: #f8f9fa;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #667eea;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-google {
+      background: white;
+      color: #333;
+      border: 2px solid #e1e5e9;
+    }
+
+    .btn-google:hover {
+      background: #f8f9fa;
+      border-color: #667eea;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: #667eea;
+      border: 2px solid #667eea;
+    }
+
+    .btn-secondary:hover {
+      background: #667eea;
+      color: white;
+    }
+
+    .divider {
+      text-align: center;
+      margin: 20px 0;
+      position: relative;
+    }
+
+    .divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: #e1e5e9;
+    }
+
+    .divider span {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 0 15px;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .form-footer {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .form-footer a {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .form-footer a:hover {
+      text-decoration: underline;
+    }
+
+    .user-div {
+      text-align: center;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 12px;
+      margin-top: 20px;
+    }
+
+    .user-div h3 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .user-div p {
+      color: #666;
+      margin-bottom: 15px;
+    }
+
+    .error-message {
+      background: #fee;
+      color: #c33;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      border-left: 4px solid #c33;
+    }
+
+    .success-message {
+      background: #efe;
+      color: #363;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      border-left: 4px solid #363;
+    }
+
+    .loading {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .loading::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      margin: -10px 0 0 -10px;
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid #667eea;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .auth-tabs {
+      display: flex;
+      margin-bottom: 30px;
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 4px;
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      background: transparent;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .auth-tab.active {
+      background: white;
+      color: #667eea;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .auth-form {
+      display: none;
+    }
+
+    .auth-form.active {
+      display: block;
+    }
+
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 30px 20px;
+      }
+      
+      .logo-section h1 {
+        font-size: 2rem;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>Connexion Firebase</h1>
+  <div class="login-container">
+    <div class="logo-section">
+      <h1><i class="fas fa-graduation-cap"></i> StudyHub</h1>
+      <p>Votre plateforme de révision intelligente</p>
+    </div>
 
-  <div id="user-div" style="display:none;">
-    Connecté en tant : <span id="user-name"></span><br />
-    <button id="logout-btn">Se déconnecter</button>
-  </div>
+    <div id="user-div" style="display:none;">
+      <h3><i class="fas fa-user-check"></i> Connexion réussie !</h3>
+      <p>Connecté en tant que : <strong id="user-name"></strong></p>
+      <button id="logout-btn" class="btn btn-secondary">
+        <i class="fas fa-sign-out-alt"></i> Se déconnecter
+      </button>
+    </div>
 
-  <div id="auth-div">
-    <input id="email" type="email" placeholder="Email" />
-    <input id="password" type="password" placeholder="Mot de passe" />
-    <button id="login-btn">Se connecter</button>
-    <button id="register-btn">S'inscrire</button>
-    <button id="forgot-btn">Mot de passe oublié</button>
-    <br /><br />
-    <button id="google-btn">Connexion avec Google</button>
+    <div id="auth-div">
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">Connexion</button>
+        <button class="auth-tab" data-tab="register">Inscription</button>
+      </div>
+
+      <!-- Formulaire de connexion -->
+      <form id="login-form" class="auth-form active">
+        <div class="form-group">
+          <label for="email"><i class="fas fa-envelope"></i> Email</label>
+          <input id="email" type="email" placeholder="votre@email.com" required>
+        </div>
+        <div class="form-group">
+          <label for="password"><i class="fas fa-lock"></i> Mot de passe</label>
+          <input id="password" type="password" placeholder="Votre mot de passe" required>
+        </div>
+        <button id="login-btn" type="button" class="btn btn-primary">
+          <i class="fas fa-sign-in-alt"></i> Se connecter
+        </button>
+        <div class="divider">
+          <span>ou</span>
+        </div>
+        <button id="google-btn" type="button" class="btn btn-google">
+          <i class="fab fa-google"></i> Continuer avec Google
+        </button>
+        <div class="form-footer">
+          <a href="#" id="forgot-btn"><i class="fas fa-key"></i> Mot de passe oublié ?</a>
+        </div>
+      </form>
+
+      <!-- Formulaire d'inscription -->
+      <form id="register-form" class="auth-form">
+        <div class="form-group">
+          <label for="register-email"><i class="fas fa-envelope"></i> Email</label>
+          <input id="register-email" type="email" placeholder="votre@email.com" required>
+        </div>
+        <div class="form-group">
+          <label for="register-password"><i class="fas fa-lock"></i> Mot de passe</label>
+          <input id="register-password" type="password" placeholder="Votre mot de passe" required>
+        </div>
+        <button id="register-btn" type="button" class="btn btn-primary">
+          <i class="fas fa-user-plus"></i> S'inscrire
+        </button>
+        <div class="divider">
+          <span>ou</span>
+        </div>
+        <button id="google-register-btn" type="button" class="btn btn-google">
+          <i class="fab fa-google"></i> Continuer avec Google
+        </button>
+      </form>
+    </div>
   </div>
 
   <script type="module" src="main.js"></script>
+  <script>
+    // Gestion des onglets
+    document.querySelectorAll('.auth-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const targetTab = tab.dataset.tab;
+        
+        // Mettre à jour les onglets actifs
+        document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        
+        // Mettre à jour les formulaires actifs
+        document.querySelectorAll('.auth-form').forEach(form => form.classList.remove('active'));
+        document.getElementById(`${targetTab}-form`).classList.add('active');
+      });
+    });
+  </script>
 </body>
 </html>
