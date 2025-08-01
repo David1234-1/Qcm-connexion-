@@ -42,6 +42,12 @@ loginBtn.onclick = () => {
     return;
   }
   signInWithEmailAndPassword(auth, email.value, password.value)
+    .then(() => {
+      // Redirection vers le tableau de bord après connexion réussie
+      setTimeout(() => {
+        window.location.href = "Télécharger StudyHub_V7_Final 2/index.html";
+      }, 1000);
+    })
     .catch(err => alert("Erreur de connexion : " + err.message));
 };
 
@@ -53,7 +59,13 @@ registerBtn.onclick = () => {
   createUserWithEmailAndPassword(auth, email.value, password.value)
     .then(userCredential => {
       sendEmailVerification(userCredential.user)
-        .then(() => alert("Email de vérification envoyé. Vérifiez votre boîte mail."));
+        .then(() => {
+          alert("Email de vérification envoyé. Vérifiez votre boîte mail.");
+          // Redirection vers le tableau de bord après inscription
+          setTimeout(() => {
+            window.location.href = "Télécharger StudyHub_V7_Final 2/index.html";
+          }, 2000);
+        });
     })
     .catch(err => alert("Erreur d'inscription : " + err.message));
 };
@@ -64,6 +76,12 @@ logoutBtn.onclick = () => {
 
 googleBtn.onclick = () => {
   signInWithPopup(auth, provider)
+    .then(() => {
+      // Redirection vers le tableau de bord après connexion Google
+      setTimeout(() => {
+        window.location.href = "Télécharger StudyHub_V7_Final 2/index.html";
+      }, 1000);
+    })
     .catch(err => alert("Erreur Google : " + err.message));
 };
 
@@ -85,6 +103,11 @@ onAuthStateChanged(auth, user => {
     if (!user.emailVerified) {
       alert("⚠️ Ton e-mail n'est pas vérifié. Vérifie ta boîte mail.");
     }
+    
+    // Redirection vers le tableau de bord après connexion réussie
+    setTimeout(() => {
+      window.location.href = "Télécharger StudyHub_V7_Final 2/index.html";
+    }, 1000); // Délai de 1 seconde pour voir le message de connexion
   } else {
     userDiv.style.display = "none";
     authDiv.style.display = "block";
